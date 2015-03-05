@@ -1,0 +1,25 @@
+{
+  "name": "syslog-parse",
+  "version": "1.0.0",
+  "description": "Parse syslog-format messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdemedes/syslog-parse.git"
+  },
+  "keywords": [
+    "syslog"
+  ],
+  "author": "Vadim Demedes <vdemedes@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vdemedes/syslog-parse/issues"
+  },
+  "homepage": "https://github.com/vdemedes/syslog-parse",
+  "devDependencies": {
+    "chai": "^2.1.1"
+  }
+}
