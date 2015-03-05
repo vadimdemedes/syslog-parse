@@ -2,6 +2,8 @@
 
 Parse syslog-formatted messages.
 
+[![Circle CI](https://circleci.com/gh/vdemedes/syslog-parse.svg?style=svg)](https://circleci.com/gh/vdemedes/syslog-parse)
+
 ### Installation
 
 ```
@@ -29,6 +31,16 @@ log = {
   message: 'Listening at 0.0.0.0:3000'
 }
 */
+```
+
+### Tests
+
+[![Circle CI](https://circleci.com/gh/vdemedes/syslog-parse.svg?style=svg)](https://circleci.com/gh/vdemedes/syslog-parse)
+
+Run tests using:
+
+```
+$ npm test
 ```
 
 ### License
