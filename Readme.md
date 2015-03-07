@@ -15,7 +15,7 @@ $ npm install syslog-parse --save
 ```javascript
 var parse = require('syslog-parse');
 
-var log = parse('<38>Feb 01:02:03 abc system[253]: Listening at 0.0.0.0:3000');
+var log = parse('<38>Feb 05 01:02:03 abc system[253]: Listening at 0.0.0.0:3000');
 
 /*
 log = {
