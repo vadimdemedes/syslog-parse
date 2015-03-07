@@ -13,7 +13,7 @@ require('chai').should();
 
 describe ('syslog-parse', function () {
   it ('parse with hostname', function () {
-    var message = '<38>Feb 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
+    var message = '<38>Feb 07 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
     
     var log = parse(message);
     log.priority.should.equal(38);
@@ -22,6 +22,7 @@ describe ('syslog-parse', function () {
     log.severityCode.should.equal(6);
     log.severity.should.equal('info');
     log.time.getMonth().should.equal(1);
+    log.time.getDate().should.equal(7);
     log.time.getHours().should.equal(1);
     log.time.getMinutes().should.equal(2);
     log.time.getSeconds().should.equal(3);
@@ -32,7 +33,7 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse without hostname', function () {
-    var message = '<38>Feb 01:02:03 system[253]: Listening at 0.0.0.0:3000';
+    var message = '<38>Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
     
     var log = parse(message);
     log.priority.should.equal(38);
@@ -41,6 +42,7 @@ describe ('syslog-parse', function () {
     log.severityCode.should.equal(6);
     log.severity.should.equal('info');
     log.time.getMonth().should.equal(1);
+    log.time.getDate().should.equal(7);
     log.time.getHours().should.equal(1);
     log.time.getMinutes().should.equal(2);
     log.time.getSeconds().should.equal(3);
@@ -51,11 +53,12 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse without priority', function () {
-    var message = 'Feb 01:02:03 system[253]: Listening at 0.0.0.0:3000';
+    var message = 'Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
     
     var log = parse(message);
     log.priority.should.equal(0);
     log.time.getMonth().should.equal(1);
+    log.time.getDate().should.equal(7);
     log.time.getHours().should.equal(1);
     log.time.getMinutes().should.equal(2);
     log.time.getSeconds().should.equal(3);
