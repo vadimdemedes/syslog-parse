@@ -21,6 +21,7 @@ module.exports = function parse (log) {
   
   var time = new Date();
   time.setMonth(month);
+  time.setDate(date);
   time.setHours(hours);
   time.setMinutes(minutes);
   time.setSeconds(seconds);
@@ -50,7 +51,7 @@ module.exports = function parse (log) {
  * Constants
  */
 
-var FACILITY = [
+const FACILITY = [
   'kern',
   'user',
   'mail',
@@ -77,7 +78,7 @@ var FACILITY = [
   'local7'
 ];
 
-var SEVERITY = [
+const SEVERITY = [
   'emerg',
   'alert',
   'crit',
@@ -88,7 +89,7 @@ var SEVERITY = [
   'debug'
 ];
 
-var MONTHS = [
+const MONTHS = [
   'Jan',
   'Feb',
   'Mar',
