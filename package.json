@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/vdemedes/syslog-parse",
   "devDependencies": {
-    "chai": "^2.2.0",
-    "mocha": "^2.2.1"
+    "chai": "^3.0.0",
+    "mocha": "^2.2.5"
   }
 }
