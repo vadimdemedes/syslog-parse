@@ -4,7 +4,7 @@
 
 module.exports = function parse (log) {
   var parts = /(\<[0-9]+\>)?([a-z]{3})\s+([0-9]{1,2})\s+([0-9]{2})\:([0-9]{2})\:([0-9]{2})(\s+[a-z\.\-]+)?\s+([a-z0-9]+)\[([a-z0-9\-\.]+)\]\:(.+)/i.exec(log.trim());
-  
+  if (!parts) parts = /(\<[0-9]+\>)?([a-z]{3})\s+([0-9]{1,2})\s+([0-9]{2})\:([0-9]{2})\:([0-9]{2})(\s+[a-z\.\-]+)?\s+(.+)/i.exec(log.trim());
   if (!parts) return {};
   
   var priority = +(parts[1] || '').replace(/[^0-9]/g, '');
@@ -27,10 +27,10 @@ module.exports = function parse (log) {
   time.setSeconds(seconds);
   
   var host = (parts[7] || '').trim();
-  var process = parts[8];
-  var pid = +parts[9] || parts[9];
-  
-  var message = parts[10].trim();
+  var process = parts[8] || '';
+  var pid = +parts[9] || parts[9] || '';
+                                                                                                                                                                
+  var message = parts[ parts.length-1 ].trim();
   
   return {
     priority: priority,
