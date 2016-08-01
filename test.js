@@ -68,6 +68,8 @@ describe ('syslog-parse', function () {
     log.message.should.equal('Listening at 0.0.0.0:3000');
   });
   
+  it ('parse with host-digits, no-pid and process-dashes', function () {
+    var message = 'Feb 07 01:02:03 abc123 systemd-logind: Removed session c160.';
     
     var log = parse(message);
     log.priority.should.equal(0);
@@ -76,6 +78,7 @@ describe ('syslog-parse', function () {
     log.time.getHours().should.equal(1);
     log.time.getMinutes().should.equal(2);
     log.time.getSeconds().should.equal(3);
+    log.host.should.equal('abc123');
     log.process.should.equal('systemd-logind');
     should.not.exist(log.pid);
     log.message.should.equal('Removed session c160.');
