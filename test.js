@@ -4,7 +4,7 @@
 
 var parse = require('./');
 
-require('chai').should();
+var should = require('chai').should();
 
 
 /**
@@ -66,6 +66,19 @@ describe ('syslog-parse', function () {
     log.process.should.equal('system');
     log.pid.should.equal(253);
     log.message.should.equal('Listening at 0.0.0.0:3000');
+  });
+  
+    
+    var log = parse(message);
+    log.priority.should.equal(0);
+    log.time.getMonth().should.equal(1);
+    log.time.getDate().should.equal(7);
+    log.time.getHours().should.equal(1);
+    log.time.getMinutes().should.equal(2);
+    log.time.getSeconds().should.equal(3);
+    log.process.should.equal('systemd-logind');
+    should.not.exist(log.pid);
+    log.message.should.equal('Removed session c160.');
   });
   
   it ('parse non-matching message', function () {
