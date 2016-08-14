@@ -1,6 +1,6 @@
 {
   "name": "syslog-parse",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Parse syslog-format messages",
   "main": "index.js",
   "scripts": {
