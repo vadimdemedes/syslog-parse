@@ -1,9 +1,22 @@
 /**
  * parse syslog-formatted messages
  */
+ 
+const SYSLOG_LINE_REGEX = new RegExp([
+  /(\<[0-9]+\>)?/,               // 1   optional priority
+  /([a-z]{3})\s+/,               // 2   month
+  /([0-9]{1,2})\s+/,             // 3   date
+  /([0-9]{2})\:/,                // 4   hours
+  /([0-9]{2})\:/,                // 5   minutes
+  /([0-9]{2})/,                  // 6   seconds
+  /(\s+[\w\.\-]+)?\s+/,          // 7   host
+  /([\w\-\(\)]+)/,               // 8   process
+  /(?:\[([a-z0-9\-\.]+)\])?\:/,  // 9   optional pid
+  /(.+)/,                        // 10  message
+].map(regex => regex.source).join(''), 'i');
 
 module.exports = function parse (log) {
-  const parts = /(\<[0-9]+\>)?([a-z]{3})\s+([0-9]{1,2})\s+([0-9]{2})\:([0-9]{2})\:([0-9]{2})(\s+[\w\.\-]+)?\s+([\w\-\(\)]+)(?:\[([a-z0-9\-\.]+)\])?\:(.+)/i.exec(log.trim());
+  let parts = SYSLOG_LINE_REGEX.exec(log.trim());
   
   if (!parts) return {};
   
