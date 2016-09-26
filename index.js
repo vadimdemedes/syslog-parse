@@ -10,7 +10,7 @@ const SYSLOG_LINE_REGEX = new RegExp([
   /([0-9]{2})\:/,                // 5   minutes
   /([0-9]{2})/,                  // 6   seconds
   /(\s+[\w\.\-]+)?\s+/,          // 7   host
-  /([\w\-\(\)]+)/,               // 8   process
+  /([\w\-\(\)\.0-9\/]+)/,        // 8   process
   /(?:\[([a-z0-9\-\.]+)\])?\:/,  // 9   optional pid
   /(.+)/,                        // 10  message
 ].map(regex => regex.source).join(''), 'i');

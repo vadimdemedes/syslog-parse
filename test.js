@@ -107,7 +107,7 @@ describe ('syslog-parse', function () {
   });
 
   it ('parse process with slash', function () {
-    const message = '<38>Feb 07 01:02:03 abc docker/6e6ea36be53a[253]: Listening at 0.0.0.0:3000';
+    const message = '<38>Feb 07 01:02:03 abc1 docker.2/6e6ea36be53a[253]: Listening at 0.0.0.0:3000';
 
     const log = parse(message);
     log.priority.should.equal(38);
@@ -121,7 +121,7 @@ describe ('syslog-parse', function () {
     log.time.getMinutes().should.equal(2);
     log.time.getSeconds().should.equal(3);
     log.host.should.equal('abc1');
-    log.process.should.equal('docker/6e6ea36be53a');
+    log.process.should.equal('docker.2/6e6ea36be53a');
     log.pid.should.equal(253);
     log.message.should.equal('Listening at 0.0.0.0:3000');
   });
