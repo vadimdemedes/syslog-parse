@@ -2,9 +2,9 @@
  * Dependencies
  */
 
-var parse = require('./');
+const parse = require('./');
 
-var should = require('chai').should();
+const should = require('chai').should();
 
 
 /**
@@ -13,9 +13,9 @@ var should = require('chai').should();
 
 describe ('syslog-parse', function () {
   it ('parse with hostname', function () {
-    var message = '<38>Feb 07 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
+    const message = '<38>Feb 07 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
     
-    var log = parse(message);
+    const log = parse(message);
     log.priority.should.equal(38);
     log.facilityCode.should.equal(4);
     log.facility.should.equal('auth');
@@ -33,9 +33,9 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse without hostname', function () {
-    var message = '<38>Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
+    const message = '<38>Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
     
-    var log = parse(message);
+    const log = parse(message);
     log.priority.should.equal(38);
     log.facilityCode.should.equal(4);
     log.facility.should.equal('auth');
@@ -53,9 +53,9 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse without priority', function () {
-    var message = 'Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
+    const message = 'Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
     
-    var log = parse(message);
+    const log = parse(message);
     log.priority.should.equal(0);
     log.time.getMonth().should.equal(1);
     log.time.getDate().should.equal(7);
@@ -69,9 +69,9 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse with host-digits, no-pid and process-dashes', function () {
-    var message = 'Feb 07 01:02:03 abc123 systemd-logind: Removed session c160.';
+    const message = 'Feb 07 01:02:03 abc123 systemd-logind: Removed session c160.';
     
-    var log = parse(message);
+    const log = parse(message);
     log.priority.should.equal(0);
     log.time.getMonth().should.equal(1);
     log.time.getDate().should.equal(7);
@@ -85,9 +85,9 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse with host-underscores and process-underscores', function () {
-    var message = 'Feb 07 01:02:03 abc_123 wpa_supplicant: wlan0: Could not connect to kernel driver';
+    const message = 'Feb 07 01:02:03 abc_123 wpa_supplicant: wlan0: Could not connect to kernel driver';
     
-    var log = parse(message);
+    const log = parse(message);
     log.priority.should.equal(0);
     log.time.getMonth().should.equal(1);
     log.time.getDate().should.equal(7);
@@ -101,7 +101,7 @@ describe ('syslog-parse', function () {
   });
   
   it ('parse non-matching message', function () {
-    var log = parse('');
+    const log = parse('');
     
     Object.keys(log).length.should.equal(0);
   });
