@@ -1,6 +1,8 @@
 /**
  * parse syslog-formatted messages
  */
+
+'use strict';
  
 const SYSLOG_LINE_REGEX = new RegExp([
   /(\<[0-9]+\>)?/,               // 1   optional priority
