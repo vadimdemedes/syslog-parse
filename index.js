@@ -2,35 +2,50 @@
  * parse syslog-formatted messages
  */
 
+'use strict';
+ 
+const SYSLOG_LINE_REGEX = new RegExp([
+  /(\<[0-9]+\>)?/,               // 1   optional priority
+  /([a-z]{3})\s+/,               // 2   month
+  /([0-9]{1,2})\s+/,             // 3   date
+  /([0-9]{2})\:/,                // 4   hours
+  /([0-9]{2})\:/,                // 5   minutes
+  /([0-9]{2})/,                  // 6   seconds
+  /(\s+[\w\.\-]+)?\s+/,          // 7   host
+  /([\w\-\(\)\.0-9\/]+)/,        // 8   process
+  /(?:\[([a-z0-9\-\.]+)\])?\:/,  // 9   optional pid
+  /(.+)/,                        // 10  message
+].map(regex => regex.source).join(''), 'i');
+
 module.exports = function parse (log) {
-  var parts = /(\<[0-9]+\>)?([a-z]{3})\s+([0-9]{1,2})\s+([0-9]{2})\:([0-9]{2})\:([0-9]{2})(\s+[\w\.\-]+)?\s+([\w\-\(\)]+)(?:\[([a-z0-9\-\.]+)\])?\:(.+)/i.exec(log.trim());
+  let parts = SYSLOG_LINE_REGEX.exec(log.trim());
   
   if (!parts) return {};
   
-  var priority = +(parts[1] || '').replace(/[^0-9]/g, '');
-  var facilityCode = priority >> 3;
-  var facility = FACILITY[facilityCode];
-  var severityCode = priority & 7;
-  var severity = SEVERITY[severityCode];
+  const priority = +(parts[1] || '').replace(/[^0-9]/g, '');
+  const facilityCode = priority >> 3;
+  const facility = FACILITY[facilityCode];
+  const severityCode = priority & 7;
+  const severity = SEVERITY[severityCode];
   
-  var month = MONTHS.indexOf(parts[2]);
-  var date = +parts[3];
-  var hours = +parts[4];
-  var minutes = +parts[5];
-  var seconds = +parts[6];
+  const month = MONTHS.indexOf(parts[2]);
+  const date = +parts[3];
+  const hours = +parts[4];
+  const minutes = +parts[5];
+  const seconds = +parts[6];
   
-  var time = new Date();
+  const time = new Date();
   time.setMonth(month);
   time.setDate(date);
   time.setHours(hours);
   time.setMinutes(minutes);
   time.setSeconds(seconds);
   
-  var host = (parts[7] || '').trim();
-  var process = parts[8];
-  var pid = +parts[9] || parts[9];
+  const host = (parts[7] || '').trim();
+  const process = parts[8];
+  const pid = +parts[9] || parts[9];
   
-  var message = parts[10].trim();
+  const message = parts[10].trim();
   
   return {
     priority: priority,
