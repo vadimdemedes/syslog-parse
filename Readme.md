@@ -1,8 +1,7 @@
-# syslog-parse
+# syslog-parse [![Build Status](https://travis-ci.org/vdemedes/syslog-parse.svg?branch=master)](https://travis-ci.org/vdemedes/syslog-parse)
 
 Parse syslog-formatted messages.
 
-[![Circle CI](https://circleci.com/gh/vdemedes/syslog-parse.svg?style=svg)](https://circleci.com/gh/vdemedes/syslog-parse)
 
 ### Installation
 
@@ -34,8 +33,6 @@ log = {
 ```
 
 ### Tests
-
-[![Circle CI](https://circleci.com/gh/vdemedes/syslog-parse.svg?style=svg)](https://circleci.com/gh/vdemedes/syslog-parse)
 
 Run tests using:
 
