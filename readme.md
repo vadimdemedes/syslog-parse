@@ -39,7 +39,7 @@ log = {
 
 If `input` can't be parsed, it returns `undefined`. Otherwise it returns an object.
 
-### input
+#### input
 
 Type: `string`
 
