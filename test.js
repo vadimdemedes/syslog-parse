@@ -1,15 +1,17 @@
 import omit from 'lodash.omit';
 import test from 'ava';
-import parse from '.';
+import parse from './dist/index.js';
 
 test('parse non-matching message', t => {
-	t.deepEqual(parse(''), {});
+	t.is(parse(''), undefined);
 });
 
 test('parse with hostname', t => {
-	const message = '<38>Feb 07 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
+	const message =
+		'<38>Feb 07 01:02:03 abc system[253]: Listening at 0.0.0.0:3000';
+
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -21,7 +23,7 @@ test('parse with hostname', t => {
 		host: 'abc',
 		process: 'system',
 		pid: 253,
-		message: 'Listening at 0.0.0.0:3000'
+		message: 'Listening at 0.0.0.0:3000',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -34,7 +36,7 @@ test('parse with hostname', t => {
 test('parse without hostname', t => {
 	const message = '<38>Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -46,7 +48,7 @@ test('parse without hostname', t => {
 		host: '',
 		process: 'system',
 		pid: 253,
-		message: 'Listening at 0.0.0.0:3000'
+		message: 'Listening at 0.0.0.0:3000',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -59,7 +61,7 @@ test('parse without hostname', t => {
 test('parse without priority', t => {
 	const message = 'Feb 07 01:02:03 system[253]: Listening at 0.0.0.0:3000';
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -71,7 +73,7 @@ test('parse without priority', t => {
 		host: '',
 		process: 'system',
 		pid: 253,
-		message: 'Listening at 0.0.0.0:3000'
+		message: 'Listening at 0.0.0.0:3000',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -82,9 +84,11 @@ test('parse without priority', t => {
 });
 
 test('parse with host-digits, no-pid and process-dashes', t => {
-	const message = 'Feb 07 01:02:03 abc123 systemd-logind: Removed session c160.';
+	const message =
+		'Feb 07 01:02:03 abc123 systemd-logind: Removed session c160.';
+
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -95,7 +99,7 @@ test('parse with host-digits, no-pid and process-dashes', t => {
 		severity: 'emerg',
 		host: 'abc123',
 		process: 'systemd-logind',
-		message: 'Removed session c160.'
+		message: 'Removed session c160.',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -106,9 +110,11 @@ test('parse with host-digits, no-pid and process-dashes', t => {
 });
 
 test('parse with host-underscores and process-underscores', t => {
-	const message = 'Feb 07 01:02:03 abc_123 wpa_supplicant: wlan0: Could not connect to kernel driver';
+	const message =
+		'Feb 07 01:02:03 abc_123 wpa_supplicant: wlan0: Could not connect to kernel driver';
+
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -119,7 +125,7 @@ test('parse with host-underscores and process-underscores', t => {
 		severity: 'emerg',
 		host: 'abc_123',
 		process: 'wpa_supplicant',
-		message: 'wlan0: Could not connect to kernel driver'
+		message: 'wlan0: Could not connect to kernel driver',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -130,9 +136,11 @@ test('parse with host-underscores and process-underscores', t => {
 });
 
 test('parse process with slash', t => {
-	const message = '<38>Feb 07 01:02:03 abc1 docker.2/6e6ea36be53a[253]: Listening at 0.0.0.0:3000';
+	const message =
+		'<38>Feb 07 01:02:03 abc1 docker.2/6e6ea36be53a[253]: Listening at 0.0.0.0:3000';
+
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -144,7 +152,7 @@ test('parse process with slash', t => {
 		host: 'abc1',
 		pid: 253,
 		process: 'docker.2/6e6ea36be53a',
-		message: 'Listening at 0.0.0.0:3000'
+		message: 'Listening at 0.0.0.0:3000',
 	});
 
 	t.is(time.getMonth(), 1);
@@ -157,7 +165,7 @@ test('parse process with slash', t => {
 test('parse with missing pid', t => {
 	const message = '<38>Feb 07 01:02:03 abc system: Listening at 0.0.0.0:3000';
 	const log = parse(message);
-	const time = log.time;
+	const {time} = log;
 	const props = omit(log, 'time');
 
 	t.deepEqual(props, {
@@ -168,7 +176,7 @@ test('parse with missing pid', t => {
 		severity: 'info',
 		host: 'abc',
 		process: 'system',
-		message: 'Listening at 0.0.0.0:3000'
+		message: 'Listening at 0.0.0.0:3000',
 	});
 
 	t.is(time.getMonth(), 1);

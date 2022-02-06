@@ -1,7 +1,6 @@
-# syslog-parse [![Build Status](https://travis-ci.org/vadimdemedes/syslog-parse.svg?branch=master)](https://travis-ci.org/vadimdemedes/syslog-parse)
+# syslog-parse [![Build Status](https://github.com/vadimdemedes/syslog-parse/workflows/test/badge.svg)](https://github.com/vadimdemedes/syslog-parse/actions)
 
 > Parse syslog-formatted messages.
-
 
 ## Installation
 
@@ -12,9 +11,11 @@ $ npm install --save syslog-parse
 ## Usage
 
 ```js
-const parse = require('syslog-parse');
+import parse from 'syslog-parse';
 
-const log = parse('<38>Feb 05 01:02:03 abc system[253]: Listening at 0.0.0.0:3000');
+const log = parse(
+	'<38>Feb 05 01:02:03 abc system[253]: Listening at 0.0.0.0:3000',
+);
 
 /*
 log = {
@@ -32,7 +33,14 @@ log = {
 */
 ```
 
+## API
 
-## License
+### parse(input)
 
-MIT © [Vadim Demedes](https://vadimdemedes.com)
+If `input` can't be parsed, it returns `undefined`. Otherwise it returns an object.
+
+### input
+
+Type: `string`
+
+Log string.
